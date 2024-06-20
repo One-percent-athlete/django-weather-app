@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ m }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<br><br><br>
+<div class="container d-flex justify-content-center">
+    <form class="row" method="post">
+        {% csrf_token %}
+        <div class="col-auto">
+          {{ form.as_p }}
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-3">Add City</button>
+        </div>
+      </form>
+</div>
+<center>
+{% if cities_info %}
+  {% for c in cities_info %}
+    <div class="container justify-content-center mt-5">
+      <div class="card mb-3" style="max-width: 540px;">
+        <a class="text-end text-primary mx-2 my-1" href="{% url 'delete_city' c.city_id %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+        </svg></a>
+          <div class="row g-0">
+            <div class="col-md-4 m-auto p-auto">
+              <img src="https://openweathermap.org/img/w/{{ c.icon }}.png" class="img-fluid rounded-start" alt="..." width="100px" height="100px">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h3 class="card-title fw-bold">{{ c.name }}</h3>
+                <p class="card-text">{{ c.temp }} ℃</p>
+                <p class="card-text">{{ c.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="container">
+      <h2>Please Add Your Favorite Cities..</h2>
+    </div>
+  {% endif %}
+    
+</center>
+
+{% endblock %}

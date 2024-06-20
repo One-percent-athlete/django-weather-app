@@ -1,12 +1,16 @@
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+# Access environment variables
+api = os.environ.get('API')
+
 
 from .forms import CityForm
 from .models import City
-
-api = "6297f03f79a4d83ca279463aafbaa7d8"
-
 
 
 def home(request):
